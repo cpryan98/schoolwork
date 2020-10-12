@@ -1,32 +1,38 @@
 /**
- * @Author - Colin Ryan
- * @Date - 12/6/2017
- * @Class - ITEC 324
+ * FileReader -- reads records (rows) from a file. 
+ *
+ * @author  Jeff Pittges
+ * @version 01-Jan-2015
  */
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.attribute.BasicFileAttributes;
+import java.io.*; 
+import java.util.Scanner;
 
-public class FileReader
+public class FileReader  
 {
-	public static void main(String[] args) throws IOException
+    private int lineCount;		// number of lines processed thus far 
+    private Scanner fileScan;		// scans the given file 
+
+    public FileReader(String filename) throws IOException 
+    {
+		this.lineCount = 0;
+		this.fileScan = new Scanner(new File(filename));
+    }
+
+	public boolean hasNext()
 	{
-		System.out.printf("Please enter a file path:\n");
-		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-		String name = reader.readLine();   
-		String fileName = name;
-
-		File myfile = new File(fileName);
-		Path path = myfile.toPath();
-
-		BasicFileAttributes file = Files.readAttributes(path, BasicFileAttributes.class);
-
-		System.out.printf("File Name: %s%n", myfile.getName());
-		System.out.printf("File Size: %s%n", myfile.length());
-		System.out.printf("File Creation Time: %s%n", file.lastAccessTime());
+		return fileScan.hasNext();
 	}
+
+    public String nextLine() throws IOException
+    {
+		String line = ""; 
+
+		if (fileScan.hasNext())
+		{
+		   line = fileScan.nextLine();
+	   	   ++lineCount;
+		}
+
+		return line; 
+    }
 }
