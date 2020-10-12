@@ -1,0 +1,1 @@
+The file words.txt has 5 words and24 letters.
